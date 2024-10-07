@@ -1,0 +1,33 @@
+{% load static tailwind_tags %} <!-- Load Tailwind tags from Django -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A brief description of the page">
+    <meta name="keywords" content="HTML, CSS, Django, Tailwind">
+    <meta name="author" content="Your Name">
+    
+    <title>{% block title %} My E-commerce Site {% endblock %}</title>
+
+    {% tailwind_css %} <!-- Loads Tailwind CSS using Django tag -->
+</head>
+<body>
+    <!-- Navbar will be included here -->
+    {% block navbar %}
+      {% include 'navbar.html' %} <!-- Includes the navbar on all pages -->
+    {% endblock %}
+
+    <!-- Page-specific content will be inserted here -->
+    <main class="container mx-auto">
+        {% block content %}
+        <!-- Default content if no other template extends -->
+        {% endblock %}
+    </main>
+
+    <!-- Optionally include a footer -->  
+    {% block footer %}
+    <!-- Footer content -->
+    {% endblock %}
+</body>
+</html>
