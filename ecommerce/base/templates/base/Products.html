@@ -1,6 +1,23 @@
+<!-- base/products.html -->
+
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container">
+    <h1 class="text-3xl font-bold text-center mb-8">Products</h1>
 
-
+    <div class="grid grid-cols-3 gap-4">
+        {% for product in products %}
+        <div class="border p-4">
+            <h2 class="text-xl font-bold">{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+            <p>Price: ${{ product.price }}</p>
+            <img src="{{ product.image.url }}" alt="{{ product.name }}">
+            <button class="bg-blue-500 text-white px-4 py-2 mt-4">Add to Cart</button>
+        </div>
+        {% empty %}
+        <p>No products available</p>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
