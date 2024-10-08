@@ -8,9 +8,46 @@
     <form method="POST" class="space-y-6">
       {% csrf_token %}
       
-      <!-- Display form fields dynamically -->
-      {{ registerForm.as_p }}
+      <!-- Display form fields dynamically with error checking -->
+      {{ registerForm.non_field_errors }}
+
+      <!-- Username field with error checking -->
+      <div>
+        <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
+        <input type="text" name="username" id="id_username" value="{{ registerForm.username.value }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        {% if registerForm.username.errors %}
+          <p class="text-red-500 text-sm">{{ registerForm.username.errors }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Email field with error checking -->
+      <div>
+        <label for="id_email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input type="email" name="email" id="id_email" value="{{ registerForm.email.value }}" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        {% if registerForm.email.errors %}
+          <p class="text-red-500 text-sm">{{ registerForm.email.errors }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Password1 field with error checking -->
+      <div>
+        <label for="id_password1" class="block text-sm font-medium text-gray-700">Password</label>
+        <input type="password" name="password1" id="id_password1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        {% if registerForm.password1.errors %}
+          <p class="text-red-500 text-sm">{{ registerForm.password1.errors }}</p>
+        {% endif %}
+      </div>
+
+      <!-- Password2 field with error checking -->
+      <div>
+        <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <input type="password" name="password2" id="id_password2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+        {% if registerForm.password2.errors %}
+          <p class="text-red-500 text-sm">{{ registerForm.password2.errors }}</p>
+        {% endif %}
+      </div>
       
+      <!-- Submit button -->
       <div>
         <button type="submit" class="w-full py-2 px-4 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-300">Sign Up</button>
       </div>
