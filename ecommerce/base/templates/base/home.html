@@ -1,45 +1,44 @@
 {% extends "base.html" %}
 
+{% load static %} <!-- Load the static tag to serve static files -->
+
 {% block content %}
-  <!-- Hero Section -->
-  <section class="bg-gray-100 py-20">
-    <div class="container mx-auto text-center">
-      <h1 class="text-5xl font-bold text-gray-800 mb-6">Welcome to StudyMate</h1>
-      <p class="text-lg text-gray-600 mb-8">
-        The perfect platform to collaborate, learn, and grow together.
-      </p>
-      <a href="/signup" class="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 transition duration-300">
-        Join Us Today
-      </a>
-    </div>
-  </section>
+ 
+  
 
-  <!-- Features Section (optional) -->
-  <section class="py-10 bg-white">
-    <div class="container mx-auto text-center">
-      <h2 class="text-3xl font-semibold text-gray-700 mb-4">Why StudyMate?</h2>
-      <p class="text-md text-gray-500 mb-8">
-        Study smarter, not harder! We offer tools for students to collaborate, exchange ideas, and improve their skills.
-      </p>
+  <!-- Features Section -->
+  <div class="bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-white py-20 w-screen">
+    <div class="container mx-auto px-6 md:flex md:items-center">
+      <div class="">
+        <h1 class="text-6xl font-bold font-serif">BOBA <span class="text-orange-300">WORLD</span></h1>
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Discover the Best Boba Teas!</h1>
+        <p class="text-lg md:text-xl mb-6">
+          We offer a wide range of premium boba teas that you'll love. Shop now and enjoy your favorite flavors!
+        </p>
+        <button id="shop-now-btn" class="bg-white text-orange-500 py-3 px-6 rounded-full font-semibold hover:bg-gray-100 transition duration-300">
+          Shop Now
+        </button>
+        
+      </div>
 
-      <div class="flex justify-around">
-        <div class="w-1/3 p-4">
-          <h3 class="text-2xl font-bold text-gray-700">Collaboration</h3>
-          <p class="text-gray-600">Work with peers and mentors to grow.</p>
-        </div>
-        <div class="w-1/3 p-4">
-          <h3 class="text-2xl font-bold text-gray-700">Resources</h3>
-          <p class="text-gray-600">Access a vast array of learning materials.</p>
-        </div>
-        <div class="w-1/3 p-4">
-          <h3 class="text-2xl font-bold text-gray-700">Support</h3>
-          <p class="text-gray-600">Get personalized help whenever you need it.</p>
-        </div>
+      <!-- Right Side: Image -->
+      <div class="md:w-1/2 mt-10 md:mt-0 flex justify-center md:justify-end">
+        <img src="{% static 'images/boba.png' %}" alt="Delicious Boba" class="w-full max-w-md rounded-full shadow-lg" />
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Available Rooms Section -->
+
+  <script>
+    // JavaScript for smooth scrolling
+    document.getElementById('shop-now-btn').addEventListener('click', function(e) {
+      e.preventDefault(); // Prevent default behavior
+      document.querySelector('#products').scrollIntoView({
+        behavior: 'smooth' // This enables smooth scrolling
+      });
+    });
+  </script>
+  <!-- Products Section -->
   {% include 'base/Products.html' %}
 
 {% endblock %}
