@@ -28,11 +28,17 @@
       <li><a href="/about" class="block px-4 py-2 hover:bg-gray-100 text-white">About Us</a></li>
     </ul>
 
-    <!-- Login, Register, and Cart Buttons (right-aligned) -->
+    <!-- Login, Register, or Username and Logout Button (right-aligned) -->
     <div class="flex items-center gap-4">
-      <!-- Login and Register Buttons -->
-      <a href="/login" class="hidden md:block text-whitebg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-white shadow-lg px-4 py-2 rounded">Login</a>
-      <a href="/register" class="hidden md:block text-whitebg-gradient-to-r from-orange-400 via-red-500 to-pink-500 text-white shadow-lg px-4 py-2 rounded">Register</a>
+      {% if user.is_authenticated %}
+        <!-- Show username and logout button when logged in -->
+        <span class="text-white">Hello {{ user.username }}</span>
+        <a href="{% url 'logout' %}" class="text-white bg-red-500 px-4 py-2 rounded">Logout</a>
+      {% else %}
+        <!-- Show login and register buttons when not logged in -->
+        <a href="{% url 'login' %}" class="text-white bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-lg px-4 py-2 rounded">Login</a>
+        <a href="{% url 'register' %}" class="text-white bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-lg px-4 py-2 rounded">Register</a>
+      {% endif %}
 
       <!-- Cart Button (far right) -->
       <button class="text-white flex items-center space-x-2">
@@ -71,7 +77,7 @@
     <li><a href="/contact" class="block px-4 py-2 hover:bg-gray-100">Contact Us</a></li>
     <li><a href="/about" class="block px-4 py-2 hover:bg-gray-100">About Us</a></li>
     <li><a href="/login" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
-    <li><a href="/signup" class="block px-4 py-2 hover:bg-gray-100">Register</a></li>
+    <li><a href="/register" class="block px-4 py-2 hover:bg-gray-100">Register</a></li>
   </ul>
 </div>
 

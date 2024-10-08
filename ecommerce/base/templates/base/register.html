@@ -1,26 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="flex justify-center items-center h-screen bg-gray-100">
+<div class="flex justify-center items-center h-[900px] bg-gray-100">
   <div class="bg-white shadow-lg rounded-lg p-8 max-w-md w-full">
     <h2 class="text-3xl font-bold text-center mb-8 text-gray-700">Create Your Account</h2>
-    <form method="post" class="space-y-6">
+    
+    <form method="POST" class="space-y-6">
       {% csrf_token %}
       
-      <div>
-        <label for="id_username" class="block text-sm font-medium text-gray-700">Username</label>
-        <input type="text" name="username" id="id_username" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
-      </div>
-      
-      <div>
-        <label for="id_password1" class="block text-sm font-medium text-gray-700">Password</label>
-        <input type="password" name="password1" id="id_password1" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
-      </div>
-      
-      <div>
-        <label for="id_password2" class="block text-sm font-medium text-gray-700">Confirm Password</label>
-        <input type="password" name="password2" id="id_password2" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" required>
-      </div>
+      <!-- Display form fields dynamically -->
+      {{ registerForm.as_p }}
       
       <div>
         <button type="submit" class="w-full py-2 px-4 bg-green-500 text-white font-bold rounded hover:bg-green-700 transition duration-300">Sign Up</button>
