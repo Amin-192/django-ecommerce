@@ -13,6 +13,15 @@ def home(request):
 def room(request):
     return render(request, 'base/room.html')
 
+def login(request):
+    return render(request, 'base/login.html')
+
+def register(request):
+    return render(request, 'base/register.html')
+
+def dashboard(request):
+    return render(request, 'base/dashboard.html')
+
 # This function name should be lowercase
 def products(request):
     products = Product.objects.all()  # Fetch all products from the database
