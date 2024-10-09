@@ -27,14 +27,14 @@
             </div>
           </td>
           <td class="py-3 px-6 text-center">
-            <form method="POST" action="{% url 'update_cart' item.product.id %}" class="inline-block">
-              {% csrf_token %}
-              <input type="number" name="quantity" value="{{ item.quantity }}" min="1" class="w-16 text-center border border-gray-300 rounded">
-              <button type="submit" class="ml-2 bg-blue-500 hover:bg-blue-700 text-white px-3 py-1 rounded">Update</button>
-            </form>
+            <div class="flex items-center justify-center">
+              <button class="minus-btn bg-gray-300 hover:bg-gray-400 text-gray-700 px-2 py-1 rounded-l" data-id="{{ item.product.id }}" {% if item.quantity <= 1 %}disabled{% endif %}>-</button>
+              <input type="text" name="quantity" value="{{ item.quantity }}" class="w-12 text-center border-t border-b border-gray-300" readonly data-id="{{ item.product.id }}">
+              <button class="plus-btn bg-gray-300 hover:bg-gray-400 text-gray-700 px-2 py-1 rounded-r" data-id="{{ item.product.id }}">+</button>
+            </div>
           </td>
           <td class="py-3 px-6 text-center">
-            <span class="font-semibold">Ksh{{ item.get_total_price }}</span>
+            <span class="font-semibold" id="total-price-{{ item.product.id }}">Ksh{{ item.get_total_price }}</span>
           </td>
           <td class="py-3 px-6 text-center">
             <a href="{% url 'remove_from_cart' item.product.id %}" class="bg-red-500 hover:bg-red-700 text-white px-3 py-1 rounded">Remove</a>
@@ -46,7 +46,7 @@
 
     <div class="mt-8 flex justify-between items-center">
       <div class="text-lg font-semibold">
-        Total: Ksh{{ cart.get_total_price }}
+        Total: <span id="cart-total">Ksh{{ cart.get_total_price }}</span>
       </div>
       <a href="#" class="bg-green-500 hover:bg-green-700 text-white px-6 py-2 rounded-lg">Proceed to Checkout</a>
     </div>
@@ -55,4 +55,56 @@
   <p class="text-lg font-medium text-gray-600">Your cart is empty.</p>
   {% endif %}
 </div>
+
+<script>
+  document.querySelectorAll('.plus-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = this.dataset.id;
+      updateCart(productId, 'plus');
+    });
+  });
+
+  document.querySelectorAll('.minus-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const productId = this.dataset.id;
+      updateCart(productId, 'minus');
+    });
+  });
+
+  function updateCart(productId, action) {
+    const csrfToken = '{{ csrf_token }}';
+
+    fetch(`/cart/update/${productId}/`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrfToken
+      },
+      body: JSON.stringify({
+        action: action
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        const inputField = document.querySelector(`input[data-id="${productId}"]`);
+        inputField.value = data.quantity;
+
+        document.getElementById(`total-price-${productId}`).innerText = `Ksh${data.item_total}`;
+        document.getElementById('cart-total').innerText = `Ksh${data.cart_total}`;
+
+        // Disable the minus button if quantity is 1
+        const minusBtn = document.querySelector(`.minus-btn[data-id="${productId}"]`);
+        if (data.quantity <= 1) {
+          minusBtn.disabled = true;
+        } else {
+          minusBtn.disabled = false;
+        }
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>
 {% endblock %}

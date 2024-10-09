@@ -4,6 +4,9 @@ from .forms import CreateUserForm, LoginForm
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse
+import json
+
 def home(request):
     products = Product.objects.all()
     context = {
@@ -87,17 +90,27 @@ def cart_detail(request):
     return render(request, 'base/cart_detail.html', context)
 
 def update_cart(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
-    cart = Cart.objects.get(user=request.user)
-    
-    cart_item = get_object_or_404(CartItem, cart=cart, product=product)
-    
-    if request.method == 'POST':
-        quantity = int(request.POST.get('quantity', 1))
-        if quantity > 0:
-            cart_item.quantity = quantity
-            cart_item.save()
-        else:
-            cart_item.delete()
+    data = json.loads(request.body)
+    action = data.get('action')  # Get the action from the request
+    cart = request.user.cart  # Assuming the cart is linked to the user
 
-    return redirect('cart_detail')
+    # Get the item in the cart
+    item = cart.items.get(product__id=product_id)
+
+    # Increment or decrement the quantity based on the action
+    if action == 'plus':
+        item.quantity += 1
+    elif action == 'minus' and item.quantity > 1:
+        item.quantity -= 1
+
+    item.save()
+
+    cart_total = cart.get_total_price()
+    item_total = item.get_total_price()
+
+    return JsonResponse({
+        'success': True,
+        'quantity': item.quantity,
+        'item_total': item_total,
+        'cart_total': cart_total
+    })
