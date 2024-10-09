@@ -15,4 +15,5 @@ urlpatterns = [
     path('cart/add/<int:product_id>/', views.add_to_cart, name='add_to_cart'),  # Add to cart URL
     path('cart/remove/<int:product_id>/', views.remove_from_cart, name='remove_from_cart'),  # Remove from cart URL
     path('cart/update/<int:product_id>/', views.update_cart, name='update_cart'),  # Update cart URL
+    path('checkout/', views.checkout, name='checkout'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

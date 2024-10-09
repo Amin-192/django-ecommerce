@@ -875,6 +875,22 @@ select {
   left: 100%;
 }
 
+.top-10 {
+  top: 2.5rem;
+}
+
+.top-\[\] {
+  top: ;
+}
+
+.top-\[50px\] {
+  top: 50px;
+}
+
+.top-\[15\%\] {
+  top: 15%;
+}
+
 .z-50 {
   z-index: 50;
 }
@@ -1022,6 +1038,14 @@ select {
 
 .w-16 {
   width: 4rem;
+}
+
+.w-\[90px\] {
+  width: 90px;
+}
+
+.w-\[130px\] {
+  width: 130px;
 }
 
 .max-w-md {

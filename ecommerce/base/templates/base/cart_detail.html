@@ -48,7 +48,7 @@
       <div class="text-lg font-semibold">
         Total: <span id="cart-total">Ksh{{ cart.get_total_price }}</span>
       </div>
-      <a href="#" class="bg-green-500 hover:bg-green-700 text-white px-6 py-2 rounded-lg">Proceed to Checkout</a>
+      <a href="{% url 'checkout' %}" class="bg-green-500 hover:bg-green-700 text-white px-6 py-2 rounded-lg">Proceed to Checkout</a>
     </div>
   </div>
   {% else %}

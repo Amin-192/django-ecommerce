@@ -114,3 +114,9 @@ def update_cart(request, product_id):
         'item_total': item_total,
         'cart_total': cart_total
     })
+    
+
+def checkout(request):
+    # Simulating M-Pesa redirection for now
+    # Later, we will integrate actual M-Pesa payment logic
+    return render(request, 'base/checkout.html')        
