@@ -32,7 +32,7 @@
     <div class="flex items-center gap-4">
       {% if user.is_authenticated %}
         <!-- Show username and logout button when logged in -->
-        <span class="text-white">Hello {{ user.username }}</span>
+        <span class="text-white text-lg shadow-2xl">{{ user.username }}</span>
         <a href="{% url 'logout' %}" class="text-white bg-red-500 px-4 py-2 rounded">Logout</a>
       {% else %}
         <!-- Show login and register buttons when not logged in -->
