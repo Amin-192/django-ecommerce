@@ -48,6 +48,8 @@ INSTALLED_APPS = [
 
 TAILWIND_APP_NAME = 'theme'
 
+ # settings.py
+LOGIN_URL = '/login/'
 
 INTERNAL_IPS = [
     "127.0.0.1",
@@ -82,6 +84,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                
+                'base.context_processors.cart_item_count',
             ],
         },
     },
