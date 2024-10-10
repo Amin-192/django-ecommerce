@@ -62,15 +62,25 @@ def user_logout(request):
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
+
+    # Check if product is sold out
+    if product.sold_out:
+        messages.error(request, f'Sorry, {product.name} is sold out and cannot be added to your cart.')
+        return redirect('home')  # Redirect to the homepage or product list page
+
+    # Get or create a cart for the user
     cart, created = Cart.objects.get_or_create(user=request.user)
 
-    # Check if item already in cart
+    # Check if the item is already in the cart
     cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
     if not created:
-        cart_item.quantity += 1
+        cart_item.quantity += 1  # Increase the quantity if the item is already in the cart
     cart_item.save()
+
+    # Success message for adding the product to the cart
     messages.success(request, f'{product.name} was added to your cart!')
-    return redirect('home')
+    
+    return redirect('home')  # Redirect to the homepage or cart page
 
 @login_required
 def remove_from_cart(request, product_id):
