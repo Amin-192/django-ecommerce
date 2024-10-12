@@ -15,7 +15,8 @@
     <!-- Logo (left-aligned) -->
     <div class="flex-none">
       <a href="/">
-        <img src="/logo3.png" alt="Logo" width="70" height="60" />
+        {% load static %}
+<img src="{% static 'images/logo.png' %}" alt="Logo" width="70" height="60" class="rounded-2xl"/>
       </a>
     </div>
 
