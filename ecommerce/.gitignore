@@ -1,0 +1,17 @@
+# Ignore database files
+*.sqlite3
+
+# Ignore virtual environment
+env/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore dotenv file
+.env
+
+# Ignore other unwanted files
+*.log
+*.pyc
+*.pyo
