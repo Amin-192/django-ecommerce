@@ -16,45 +16,39 @@
     <div class="flex-none">
       <a href="/">
         {% load static %}
-<img src="{% static 'images/logo.png' %}" alt="Logo" width="70" height="60" class="rounded-2xl"/>
+        <img src="{% static 'images/logo.png' %}" alt="Logo" width="70" height="60" class="rounded-2xl"/>
       </a>
     </div>
 
-    <!-- Navigation Links (center-aligned) -->
+    <!-- Navigation Links (center-aligned, hidden on mobile) -->
     <ul class="hidden md:flex space-x-8 text-center">
-      <li><a href="/" class="block px-4 py-2 hover:bg-gray-100 text-white">Home</a></li>
       
-      <li><a href="/categories" class="block px-4 py-2 hover:bg-gray-100 text-white">Categories</a></li>
-      <li><a href="/contact" class="block px-4 py-2 hover:bg-gray-100 text-white">Contact Us</a></li>
-      <li><a href="/about" class="block px-4 py-2 hover:bg-gray-100 text-white">About Us</a></li>
     </ul>
 
-    <!-- Login, Register, or Username and Logout Button (right-aligned) -->
+    <!-- User Links (right-aligned) -->
     <div class="flex items-center gap-4">
       {% if user.is_authenticated %}
-        <!-- Show username and logout button when logged in -->
+        <!-- Username and Logout Button -->
         <span class="text-white text-lg shadow-2xl">{{ user.username }}</span>
         <a href="{% url 'logout' %}" class="text-white bg-red-500 px-4 py-2 rounded">Logout</a>
       {% else %}
-        <!-- Show login and register buttons when not logged in -->
+        <!-- Login and Register Buttons -->
         <a href="{% url 'login' %}" class="text-white bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-lg px-4 py-2 rounded">Login</a>
         <a href="{% url 'register' %}" class="text-white bg-gradient-to-r from-orange-400 via-red-500 to-pink-500 shadow-lg px-4 py-2 rounded">Register</a>
       {% endif %}
 
-    <!-- Cart Button (far right) -->
-<a href="/cart" class="text-white flex items-center space-x-2 relative">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
-  </svg>
-  <span>Cart</span>
+      <!-- Cart Button -->
+      <a href="/cart" class="text-white flex items-center space-x-2 relative">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <span>Cart</span>
+        {% if cart_item_count > 0 %}
+        <span class="absolute top-0 left-[100%] bg-orange-700 text-white text-xs rounded-full px-2 py-1">{{ cart_item_count }}</span>
+        {% endif %}
+      </a>
 
-  <!-- Cart Count Badge -->
-  {% if cart_item_count > 0 %}
-  <span class="absolute top-0 left-[100%] bg-orange-700 text-white text-xs rounded-full px-2 py-1">{{ cart_item_count }}</span>
-  {% endif %}
-</a>
-
-      <!-- Hamburger Button for Sidebar (mobile view) -->
+      <!-- Hamburger Button for Sidebar (visible on mobile) -->
       <div class="md:hidden">
         <button id="menu-btn" class="text-white">
           <svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -78,12 +72,30 @@
   </div>
   <ul class="mt-6">
     <li><a href="/" class="block px-4 py-2 hover:bg-gray-100">Home</a></li>
-    <li><a href="/products" class="block px-4 py-2 hover:bg-gray-100">Products</a></li>
-    <li><a href="/categories" class="block px-4 py-2 hover:bg-gray-100">Categories</a></li>
-    <li><a href="/contact" class="block px-4 py-2 hover:bg-gray-100">Contact Us</a></li>
-    <li><a href="/about" class="block px-4 py-2 hover:bg-gray-100">About Us</a></li>
-    <li><a href="/login" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
-    <li><a href="/register" class="block px-4 py-2 hover:bg-gray-100">Register</a></li>
+    
+    
+    {% if user.is_authenticated %}
+      <!-- Authenticated User Links -->
+      <li><span class="block px-4 py-2 text-gray-700">Welcome, {{ user.username }}</span></li>
+      <li><a href="{% url 'logout' %}" class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
+    {% else %}
+      <!-- Guest User Links -->
+      <li><a href="{% url 'login' %}" class="block px-4 py-2 hover:bg-gray-100">Login</a></li>
+      <li><a href="{% url 'register' %}" class="block px-4 py-2 hover:bg-gray-100">Register</a></li>
+    {% endif %}
+
+    <!-- Cart (only if needed in sidebar as well) -->
+    <li>
+      <a href="/cart" class="block px-4 py-2 hover:bg-gray-100 flex items-center space-x-2 relative">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+        <span>Cart</span>
+        {% if cart_item_count > 0 %}
+        <span class="absolute top-0 left-[100%] bg-orange-700 text-white text-xs rounded-full px-2 py-1">{{ cart_item_count }}</span>
+        {% endif %}
+      </a>
+    </li>
   </ul>
 </div>
 
