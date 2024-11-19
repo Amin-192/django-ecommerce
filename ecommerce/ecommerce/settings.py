@@ -27,7 +27,7 @@ SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'default-secret-key-for-dev')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-ecommerce-nine.vercel.app']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'django-ecommerce-ten.vercel.app']
 
 
 # Application definition
