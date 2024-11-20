@@ -1,0 +1,23 @@
+{
+    
+    "builds": [
+      {
+        "src": "ecommerce/wsgi.py",
+        "use": "@vercel/python"
+      },
+      {
+        "src": "staticfiles/**/*",
+        "use": "@vercel/static"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/static/(.*)",
+        "dest": "/staticfiles/$1"
+      },
+      {
+        "src": "/(.*)",
+        "dest": "ecommerce/wsgi.py"
+      }
+    ]
+  }
